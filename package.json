@@ -4,31 +4,53 @@
   "description": "There is no point in procrastinating any longer",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.71.0"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:lazykorgi.apply"
+    "onCommand:lazykorgi.dryrun",
+    "onCommand:lazykorgi.apply",
+    "onCommand:lazykorgi.delete"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
+        "command": "lazykorgi.dryrun",
+        "title": "Lazy korgi dry run"
+      },
+      {
         "command": "lazykorgi.apply",
         "title": "Lazy korgi apply"
+      },
+      {
+        "command": "lazykorgi.delete",
+        "title": "Lazy korgi delete"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "lazykorgi.apply"
+          "command": "lazykorgi.dryrun"          
+        },
+        {
+          "command": "lazykorgi.apply"          
+        },
+        {
+          "command": "lazykorgi.delete"          
         }
       ],
       "editor/title/context": [
         {
+          "command": "lazykorgi.dryrun"          
+        },
+        {
           "command": "lazykorgi.apply"
+        },
+        {
+          "command": "lazykorgi.delete"          
         }
       ]
     }
