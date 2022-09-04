@@ -34,6 +34,7 @@ import * as vscode from 'vscode';
 		newTerminal.sendText(command);
 	}
 	else{
+		vscode.window.activeTerminal?.show();
 		vscode.window.activeTerminal?.sendText(command);
 	}
 
@@ -71,6 +72,7 @@ import * as vscode from 'vscode';
 		newTerminal.sendText(command);
 	}
 	else{
+		vscode.window.activeTerminal?.show();
 		vscode.window.activeTerminal?.sendText(command);
 	}
 
