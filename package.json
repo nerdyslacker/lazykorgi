@@ -39,13 +39,16 @@
     "menus": {
       "explorer/context": [
         {
-          "command": "lazykorgi.dryrun"          
+          "command": "lazykorgi.dryrun",     
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         },
         {
-          "command": "lazykorgi.apply"          
+          "command": "lazykorgi.apply",         
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         },
         {
-          "command": "lazykorgi.delete"          
+          "command": "lazykorgi.delete",
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         }
       ],
       "editor/title/context": [
