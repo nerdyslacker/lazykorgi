@@ -23,4 +23,8 @@ realm
 ```
 Just right click on the `app.yaml` and choose one of the `lazykorgi` commands.
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/31778860/189173184-e6545db6-dcc7-4b1a-adc0-d3c7913e42ff.gif">
+</p>
+
 **Enjoy!**
