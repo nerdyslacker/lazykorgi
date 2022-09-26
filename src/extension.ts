@@ -6,7 +6,7 @@ import * as vscode from 'vscode';
 /**
  * Korgi apply action.
  */
- async function korgiApply(uri: vscode.Uri, dry: boolean): Promise<vscode.TextEditor | undefined> {
+ async function korgiApply(uri: vscode.Uri, dry: boolean, skipDeps: boolean): Promise<vscode.TextEditor | undefined> {
 	const oldPath = uri.fsPath;
 	const oldPathParsed = path.parse(oldPath);
 	const oldPathStats = await fs.stat(oldPath);
@@ -27,7 +27,7 @@ import * as vscode from 'vscode';
 	const appNamespace = array[array.length - 3];
 	const appEnv = array[array.length - 4];
 
-	const command = `korgi apply -e ${appEnv} -n ${appNamespace} ${appGroup} -a ${appName} --isolate=false --kapp-args="--diff-changes" --dry-run=${dry} --skip-deps`;
+	const command = `korgi apply -e ${appEnv} -n ${appNamespace} ${appGroup} -a ${appName} --isolate=true --kapp-args="--diff-changes" --dry-run=${dry} --skip-deps=${skipDeps}`;
 	if(vscode.window.terminals.length === 0){
 		const newTerminal = vscode.window.createTerminal(`lazykorgi terminal`);
 		newTerminal.show();
@@ -80,35 +80,50 @@ import * as vscode from 'vscode';
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	const dryCommand = vscode.commands.registerCommand('lazykorgi.dryrun', (uri: vscode.TextDocument | vscode.Uri, dry: boolean) => {
+	const dryCommand = vscode.commands.registerCommand('lazykorgi.dryrun', (uri: vscode.TextDocument | vscode.Uri, dry: boolean, skipDeps: boolean) => {
 		if (!uri || !(<vscode.Uri>uri).fsPath) {
 			const editor = vscode.window.activeTextEditor;
 			if (!editor) {
 				return;
 			}
 
-			return korgiApply(<vscode.Uri>editor.document.uri, true);
+			return korgiApply(<vscode.Uri>editor.document.uri, true, true);
 		}
 
-		return korgiApply(<vscode.Uri>uri, true);
+		return korgiApply(<vscode.Uri>uri, true, true);
 	});
 
 	context.subscriptions.push(dryCommand);
 
-	const applyCommand = vscode.commands.registerCommand('lazykorgi.apply', (uri: vscode.TextDocument | vscode.Uri, dry: boolean) => {
+	const applyCommand = vscode.commands.registerCommand('lazykorgi.apply', (uri: vscode.TextDocument | vscode.Uri, dry: boolean, skipDeps: boolean) => {
 		if (!uri || !(<vscode.Uri>uri).fsPath) {
 			const editor = vscode.window.activeTextEditor;
 			if (!editor) {
 				return;
 			}
 
-			return korgiApply(<vscode.Uri>editor.document.uri, false);
+			return korgiApply(<vscode.Uri>editor.document.uri, false, false);
 		}
 
-		return korgiApply(<vscode.Uri>uri, false);
+		return korgiApply(<vscode.Uri>uri, false, false);
 	});
 
 	context.subscriptions.push(applyCommand);
+
+	const applyWithSkipCommand = vscode.commands.registerCommand('lazykorgi.applyskipping', (uri: vscode.TextDocument | vscode.Uri, dry: boolean, skipDeps: boolean) => {
+		if (!uri || !(<vscode.Uri>uri).fsPath) {
+			const editor = vscode.window.activeTextEditor;
+			if (!editor) {
+				return;
+			}
+
+			return korgiApply(<vscode.Uri>editor.document.uri, false, true);
+		}
+
+		return korgiApply(<vscode.Uri>uri, false, true);
+	});
+
+	context.subscriptions.push(applyWithSkipCommand);
 
 	const deleteCommand = vscode.commands.registerCommand('lazykorgi.delete', (uri: vscode.TextDocument | vscode.Uri) => {
 		if (!uri || !(<vscode.Uri>uri).fsPath) {
