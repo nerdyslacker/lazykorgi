@@ -2,7 +2,7 @@
   "name": "lazykorgi",
   "displayName": "lazykorgi",
   "description": "There is no point in procrastinating any longer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "karyan40024",
   "repository": {
 		"type": "git",
@@ -19,6 +19,8 @@
     "onCommand:lazykorgi.dryrun",
     "onCommand:lazykorgi.apply",
     "onCommand:lazykorgi.applyskipping",
+    "onCommand:lazykorgi.applyoverrideownership",
+    "onCommand:lazykorgi.applyrecreateoverrideownership",
     "onCommand:lazykorgi.delete"
   ],
   "main": "./out/extension.js",
@@ -26,7 +28,7 @@
     "commands": [
       {
         "command": "lazykorgi.dryrun",
-        "title": "Lazy korgi dry run"
+        "title": "Lazy korgi apply (dry-run)"
       },
       {
         "command": "lazykorgi.apply",
@@ -35,6 +37,14 @@
       {
         "command": "lazykorgi.applyskipping",
         "title": "Lazy korgi apply (skip-deps)"
+      },
+      {
+        "command": "lazykorgi.applyoverrideownership",
+        "title": "Lazy korgi apply (override-ownership)"
+      },
+      {
+        "command": "lazykorgi.applyrecreateoverrideownership",
+        "title": "Lazy korgi apply (fallback-on-replace)"
       },
       {
         "command": "lazykorgi.delete",
@@ -56,22 +66,42 @@
           "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         },
         {
+          "command": "lazykorgi.applyoverrideownership",         
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
+        },
+        {
+          "command": "lazykorgi.applyrecreateoverrideownership",         
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
+        },
+        {
           "command": "lazykorgi.delete",
           "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         }
       ],
       "editor/title/context": [
         {
-          "command": "lazykorgi.dryrun"          
+          "command": "lazykorgi.dryrun",     
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         },
         {
-          "command": "lazykorgi.apply"
+          "command": "lazykorgi.apply",         
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         },
         {
-          "command": "lazykorgi.applyskipping"
+          "command": "lazykorgi.applyskipping",         
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         },
         {
-          "command": "lazykorgi.delete"          
+          "command": "lazykorgi.applyoverrideownership",         
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
+        },
+        {
+          "command": "lazykorgi.applyrecreateoverrideownership",         
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
+        },
+        {
+          "command": "lazykorgi.delete",
+          "when": "resourceFilename =~  /^\\w.+.(yaml|gotmpl)$/"     
         }
       ]
     }
